@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+set timeout -1
+spawn sudo -u debian-tor tor-gencert --create-identity-key -m 12 -a 192.168.1.4:7000 -i /var/lib/tor/keys/authority_identity_key -s /var/lib/tor/keys/authority_signing_key -c /var/lib/tor/keys/authority_certificate
+expect {Enter PEM pass phrase:} {send "SecretPassword\n"}
+expect {Verifying - Enter PEM pass phrase:} {send "SecretPassword\n"}
+expect eof
