@@ -23,9 +23,7 @@ node_client = request.XenVM('client')
 node_client.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_client.Site('Site 1')
 node_client.ram = 4096
-node_client.addService(pg.Execute(shell="sh", command="/
-                                  
-                                  /bin/sudo /bin/bash /local/repository/client-install.sh"))
+node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
 iface0 = node_client.addInterface('interface-0', pg.IPv4Address('192.168.3.100','255.255.255.0'))
 
 # Node webserver
