@@ -23,7 +23,9 @@ node_client = request.XenVM('client')
 node_client.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_client.Site('Site 1')
 node_client.ram = 4096
-node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/client-install.sh"))
+node_client.addService(pg.Execute(shell="sh", command="/
+                                  
+                                  /bin/sudo /bin/bash /local/repository/client-install.sh"))
 iface0 = node_client.addInterface('interface-0', pg.IPv4Address('192.168.3.100','255.255.255.0'))
 
 # Node webserver
@@ -31,7 +33,7 @@ node_webserver = request.XenVM('webserver')
 node_webserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_webserver.Site('Site 1')
 node_webserver.ram = 4096
-node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/webserver-install.sh"))
+node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"))
 iface1 = node_webserver.addInterface('interface-14', pg.IPv4Address('192.168.2.200','255.255.255.0'))
 
 # Node directoryserver
@@ -39,7 +41,7 @@ node_directoryserver = request.XenVM('directoryserver')
 node_directoryserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_directoryserver.Site('Site 1')
 node_directoryserver.ram = 4096
-node_directoryserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/dir-install.sh"))
+node_directoryserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
 iface2 = node_directoryserver.addInterface('interface-2', pg.IPv4Address('192.168.1.4','255.255.255.0'))
 
 # Node relay1
@@ -47,7 +49,7 @@ node_relay1 = request.XenVM('relay1')
 node_relay1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_relay1.Site('Site 1')
 node_relay1.ram = 4096
-node_relay1.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/relay-install.sh"))
+node_relay1.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 iface3 = node_relay1.addInterface('interface-4', pg.IPv4Address('192.168.11.2','255.255.255.0'))
 
 # Node relay2
@@ -55,7 +57,7 @@ node_relay2 = request.XenVM('relay2')
 node_relay2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_relay2.Site('Site 1')
 node_relay2.ram = 4096
-node_relay2.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/relay-install.sh"))
+node_relay2.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 iface4 = node_relay2.addInterface('interface-17', pg.IPv4Address('192.168.12.2','255.255.255.0'))
 
 # Node relay3
@@ -63,7 +65,7 @@ node_relay3 = request.XenVM('relay3')
 node_relay3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_relay3.Site('Site 1')
 node_relay3.ram = 4096
-node_relay3.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/relay-install.sh"))
+node_relay3.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 iface5 = node_relay3.addInterface('interface-10', pg.IPv4Address('192.168.13.2','255.255.255.0'))
 
 # Node relay4
@@ -71,7 +73,7 @@ node_relay4 = request.XenVM('relay4')
 node_relay4.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_relay4.Site('Site 1')
 node_relay4.ram = 4096
-node_relay4.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/relay-install.sh"))
+node_relay4.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 iface6 = node_relay4.addInterface('interface-6', pg.IPv4Address('192.168.16.2','255.255.255.0'))
 
 # Node relay5
@@ -79,7 +81,7 @@ node_relay5 = request.XenVM('relay5')
 node_relay5.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 node_relay5.Site('Site 1')
 node_relay5.ram = 4096
-node_relay5.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /usr/bin/bash /local/repository/relay-install.sh"))
+node_relay5.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 
 iface7 = node_relay5.addInterface('interface-8', pg.IPv4Address('192.168.15.2','255.255.255.0'))
 
