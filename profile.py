@@ -1,4 +1,44 @@
-"""A basic testing network"""
+"""A basic Tor testing network.
+
+Instructions:
+
+This profile creates a Tor testing network.
+
+Wait for the profile instance to start, and wait for all of the startup 
+processes to finish running. Then log in to the VM via SSH
+as specified below.  
+
+It may take a few minutes to build the Tor circuits.
+
+To see the status of the Tor network, run
+
+```
+sudo -u debian-tor arm
+```
+
+on any of the Tor hosts (client, relay, or directory server).
+
+To verify that the anonymity is working, on the client, run the 
+following to see how you appear to the web server:
+
+```
+wget -qO- http://192.168.2.200/
+```
+
+Then, run the same command with Tor, and see how you appear to 
+the webserver:
+
+```
+proxychains wget -qO- http://192.168.2.200/
+```
+
+If you need to restart the Tor process on any host:
+
+```
+sudo pkill -9 tor
+sudo /etc/init.d/tor restart
+```
+"""
 
 #
 # NOTE: This code was machine converted. An actual human would not
