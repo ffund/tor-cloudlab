@@ -91,4 +91,6 @@ EOL"
 
 sudo /etc/init.d/tor start
 
+sleep 30
+
 sudo cat /var/log/tor/debug.log | grep "Trusted"
