@@ -13,7 +13,7 @@ It may take a few minutes to build the Tor circuits.
 To see the status of the Tor network, run
 
 ```
-sudo -u debian-tor arm
+sudo -u debian-tor nyx
 ```
 
 on any of the Tor hosts (client, relay, or directory server).
@@ -35,8 +35,9 @@ proxychains wget -qO- http://192.168.2.200/
 If you need to restart the Tor process on any host:
 
 ```
+sudo service tor stop
 sudo pkill -9 tor
-sudo /etc/init.d/tor restart
+sudo service tor restart
 ```
 """
 
