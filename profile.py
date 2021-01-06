@@ -83,6 +83,23 @@ node_directoryserver.ram = 4096
 node_directoryserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
 iface2 = node_directoryserver.addInterface('interface-2', pg.IPv4Address('192.168.1.4','255.255.255.0'))
 
+# Node directoryserver
+node_directoryserver2 = request.XenVM('directoryserver2')
+node_directoryserver2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_directoryserver2.Site('Site 1')
+node_directoryserver2.ram = 4096
+node_directoryserver2.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
+iface2x = node_directoryserver2.addInterface('interface-2x', pg.IPv4Address('192.168.20.4','255.255.255.0'))
+
+# Node directoryserver
+node_directoryserver3 = request.XenVM('directoryserver3')
+node_directoryserver3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_directoryserver3.Site('Site 1')
+node_directoryserver3.ram = 4096
+node_directoryserver3.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
+iface2y = node_directoryserver3.addInterface('interface-2y', pg.IPv4Address('192.168.30.4','255.255.255.0'))
+
+
 # Node relay1
 node_relay1 = request.XenVM('relay1')
 node_relay1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
@@ -144,6 +161,8 @@ node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU1
 node_router_2.Site('Site 1')
 iface12 = node_router_2.addInterface('interface-12', pg.IPv4Address('192.168.10.2','255.255.255.0'))
 iface13 = node_router_2.addInterface('interface-3', pg.IPv4Address('192.168.1.1','255.255.255.0'))
+iface13x = node_router_2.addInterface('interface-3x', pg.IPv4Address('192.168.20.1','255.255.255.0'))
+iface13y = node_router_2.addInterface('interface-3y', pg.IPv4Address('192.168.30.1','255.255.255.0'))
 iface14 = node_router_2.addInterface('interface-5', pg.IPv4Address('192.168.11.1','255.255.255.0'))
 iface15 = node_router_2.addInterface('interface-7', pg.IPv4Address('192.168.16.1','255.255.255.0'))
 iface16 = node_router_2.addInterface('interface-9', pg.IPv4Address('192.168.15.1','255.255.255.0'))
@@ -186,6 +205,24 @@ iface2.bandwidth = 10000
 link_1.addInterface(iface2)
 iface13.bandwidth = 10000
 link_1.addInterface(iface13)
+
+# Link link-1x
+link_1x = request.Link('link-1x')
+link_1x.Site('undefined')
+iface2x.bandwidth = 10000
+link_1x.addInterface(iface2x)
+iface13x.bandwidth = 10000
+link_1x.addInterface(iface13x)
+
+
+# Link link-1y
+link_1y = request.Link('link-1y')
+link_1y.Site('undefined')
+iface2y.bandwidth = 10000
+link_1y.addInterface(iface2y)
+iface13y.bandwidth = 10000
+link_1y.addInterface(iface13y)
+
 
 # Link link-2
 link_2 = request.Link('link-2')
