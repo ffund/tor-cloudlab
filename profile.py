@@ -56,6 +56,14 @@ import geni.rspec.emulab as emulab
 # Create a portal object,
 pc = portal.Context()
 
+# describe parameters
+pc.defineParameter("n_dir", "Number of directory servers", portal.ParameterType.INTEGER, 3)
+pc.defineParameter("n_relay", "Number of relays (that are not directory servers", portal.ParameterType.INTEGER, 5)
+pc.defineParameter("n_client", "Number of clients", portal.ParameterType.INTEGER, 1)
+
+# Get values specified by user during instantiation
+params = pc.bindParameters()
+
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
