@@ -67,10 +67,62 @@ params = pc.bindParameters()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
+# Link between routers
+link_r = request.Link('link-r')
+link_r.Site('Site 1')
+
+# Link between webserver and router 3
+link_web = request.Link('link-web')
+link_web.Site('Site 1')
+
+# Link for tor network
+link_tor = request.Link('link-tor')
+link_tor.Site('Site 1')
+
+# First, set up routers
+
+# Node router-1
+node_router_1 = request.XenVM('router1')
+node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_router_1.Site('Site 1')
+iface_r1 = node_router_1.addInterface('interface-router1', pg.IPv4Address('10.10.254.1','255.255.255.0'))
+iface_r1.bandwidth = 10000
+link_r.addInterface(iface_r1)
+
+# Node router-2
+node_router_2 = request.XenVM('router2')
+node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_router_2.Site('Site 1')
+iface_router2 = node_router_2.addInterface('interface-3', pg.IPv4Address('10.10.1.254','255.255.255.0'))
+iface_router2.bandwidth = 10000
+link_tor.addInterface(iface_router2)
+iface_r2 = node_router_2.addInterface('interface-router2', pg.IPv4Address('10.10.254.2','255.255.255.0'))
+iface_r2.bandwidth = 10000
+link_r.addInterface(iface_r2)
+
+# Node router-3
+node_router_3 = request.XenVM('router3')
+node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_router_3.Site('Site 1')
+iface_r3 = node_router_3.addInterface('interface-router3', pg.IPv4Address('10.10.254.3','255.255.255.0'))
+iface_r3.bandwidth = 10000
+link_r.addInterface(iface_r3)
+iface_r3_web  = node_router_3.addInterface('interface-r3-web', pg.IPv4Address('10.10.253.1','255.255.255.0'))
+iface_r3_web.bandwidth = 10000
+link_web.addInterface(iface_r3_web)
+
+
+# set up webserver
+node_webserver = request.XenVM('webserver')
+node_webserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_webserver.Site('Site 1')
+node_webserver.ram = 4096
+node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"))
+iface_webserver = node_webserver.addInterface('interface-webserver', pg.IPv4Address('10.10.253.200','255.255.255.0'))
+iface_webserver.bandwidth = 10000
+link_web.addInterface(iface_webserver)
+
 # set up clients!
-# link between clients and router 1
-link_clients_router = request.Link('link-clients-router')
-link_clients_router.Site('Site 1')
 for i in range(params.n_client):
 	# Node client
 	node_client = request.XenVM('client' + str(i+1))
@@ -78,27 +130,19 @@ for i in range(params.n_client):
 	node_client.Site('Site 1')
 	node_client.ram = 4096
 	node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
-	iface_client = node_client.addInterface('interface-client-' + str(i+1), pg.IPv4Address('192.168.3.' + str(i+1),'255.255.255.0'))
+	iface_client = node_client.addInterface('interface-client-' + str(i+1), pg.IPv4Address('10.10.' + str(200+1+i) + '.' + str(i+1),'255.255.255.0'))
 	iface_client.bandwidth = 10000
+	# link between client and router 1
+	link_clients_router = request.Link('link-r1-client' + str(i+1))
+	link_clients_router.Site('Site 1')
 	link_clients_router.addInterface(iface_client)
+	iface_router1 = node_router_1.addInterface('interface-r1-' + str(i+1), pg.IPv4Address('10.10.' + str(200+1+i) + '.254','255.255.255.0'))
+	iface_router1.bandwidth = 10000
+	link_clients_router.addInterface(iface_router1)
 
 
-# Link between webserver and router 3
-link_web = request.Link('link-web')
-link_web.Site('Site 1')
-# set up webserver
-node_webserver = request.XenVM('webserver')
-node_webserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_webserver.Site('Site 1')
-node_webserver.ram = 4096
-node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"))
-iface_webserver = node_webserver.addInterface('interface-webserver', pg.IPv4Address('192.168.2.200','255.255.255.0'))
-iface_webserver.bandwidth = 10000
-link_web.addInterface(iface_webserver)
 
 
-link_tor = request.Link('link-tor')
-link_tor.Site('Site 1')
 # Node directoryserver
 for i in range(params.n_dir):
 	# set up directory servers
@@ -122,43 +166,6 @@ for i in range(params.n_relay):
 	iface_relay.bandwidth = 10000
 	link_tor.addInterface(iface_relay)
 
-# Link between routers
-link_r = request.Link('link-r')
-link_r.Site('Site 1')
-
-
-# Node router-1
-node_router_1 = request.XenVM('router1')
-node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_router_1.Site('Site 1')
-iface_router1 = node_router_1.addInterface('interface-1', pg.IPv4Address('192.168.3.254','255.255.255.0'))
-iface_router1.bandwidth = 10000
-link_clients_router.addInterface(iface_router1)
-iface_r1 = node_router_1.addInterface('interface-router1', pg.IPv4Address('192.168.10.1','255.255.255.0'))
-iface_r1.bandwidth = 10000
-link_r.addInterface(iface_r1)
-
-# Node router-2
-node_router_2 = request.XenVM('router2')
-node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_router_2.Site('Site 1')
-iface_router2 = node_router_2.addInterface('interface-3', pg.IPv4Address('192.168.1.254','255.255.255.0'))
-iface_router2.bandwidth = 10000
-link_tor.addInterface(iface_router2)
-iface_r2 = node_router_2.addInterface('interface-router2', pg.IPv4Address('192.168.10.2','255.255.255.0'))
-iface_r2.bandwidth = 10000
-link_r.addInterface(iface_r2)
-
-# Node router-3
-node_router_3 = request.XenVM('router3')
-node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_router_3.Site('Site 1')
-iface_r3 = node_router_3.addInterface('interface-router3', pg.IPv4Address('192.168.10.3','255.255.255.0'))
-iface_r3.bandwidth = 10000
-link_r.addInterface(iface_r3)
-iface_r3_web  = node_router_3.addInterface('interface-r3-web', pg.IPv4Address('192.168.2.1','255.255.255.0'))
-iface_r3_web.bandwidth = 10000
-link_web.addInterface(iface_r3_web)
 
 
 
