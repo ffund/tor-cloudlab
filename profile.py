@@ -75,13 +75,9 @@ link_r.Site('Site 1')
 link_web = request.Link('link-web')
 link_web.Site('Site 1')
 
-# Link for tor network
-link_tor = request.Link('link-tor')
-link_tor.Site('Site 1')
-
 # First, set up routers
 
-# Node router-1
+# Node router1
 node_router_1 = request.XenVM('router1')
 node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_1.Site('Site 1')
@@ -89,18 +85,15 @@ iface_r1 = node_router_1.addInterface('interface-router1', pg.IPv4Address('10.10
 iface_r1.bandwidth = 10000
 link_r.addInterface(iface_r1)
 
-# Node router-2
+# Node router2
 node_router_2 = request.XenVM('router2')
 node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_2.Site('Site 1')
-iface_router2 = node_router_2.addInterface('interface-3', pg.IPv4Address('10.10.1.254','255.255.255.0'))
-iface_router2.bandwidth = 10000
-link_tor.addInterface(iface_router2)
 iface_r2 = node_router_2.addInterface('interface-router2', pg.IPv4Address('10.10.254.2','255.255.255.0'))
 iface_r2.bandwidth = 10000
 link_r.addInterface(iface_r2)
 
-# Node router-3
+# Node router3
 node_router_3 = request.XenVM('router3')
 node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_3.Site('Site 1')
@@ -141,8 +134,6 @@ for i in range(params.n_client):
 	link_clients_router.addInterface(iface_router1)
 
 
-
-
 # Node directoryserver
 for i in range(params.n_dir):
 	# set up directory servers
@@ -151,9 +142,15 @@ for i in range(params.n_dir):
 	node_dir.Site('Site 1')
 	node_dir.ram = 4096
 	node_dir.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
-	iface_dir = node_dir.addInterface('interface-dir-'  + str(i+1), pg.IPv4Address('192.168.1.' + str(i+1),'255.255.255.0'))
+	# Link for tor network
+	link_tor = request.Link('link-tor-' + str(i+1))
+	link_tor.Site('Site 1')
+	iface_dir = node_dir.addInterface('interface-dir' + str(i+1), pg.IPv4Address('10.10.' + str(i+1) + '.' + str(i+1),'255.255.255.0'))
 	iface_dir.bandwidth = 10000
 	link_tor.addInterface(iface_dir)
+	iface_router2 = node_router_2.addInterface('interface-r2-dir' + str(i+1), pg.IPv4Address('10.10.' + str(i+1) + '.254','255.255.255.0'))
+	iface_router2.bandwidth = 10000
+	link_tor.addInterface(iface_router2)
 
 # set up relay nodes
 for i in range(params.n_relay):
@@ -162,9 +159,15 @@ for i in range(params.n_relay):
 	node_relay.Site('Site 1')
 	node_relay.ram = 4096
 	node_relay.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-	iface_relay = node_relay.addInterface('interface-relay-' + str(i+1), pg.IPv4Address('192.168.1.' + str(i+100),'255.255.255.0'))
+	# Link for tor network
+	link_tor = request.Link('link-tor-' + str(i+1+100))
+	link_tor.Site('Site 1')
+	iface_relay = node_relay.addInterface('interface-relay' + str(i+1), pg.IPv4Address('10.10.' + str(i+1+100) + '.' + str(i+1),'255.255.255.0'))
 	iface_relay.bandwidth = 10000
 	link_tor.addInterface(iface_relay)
+	iface_router2 = node_router_2.addInterface('interface-r2-relay' + str(i+1), pg.IPv4Address('10.10.' + str(i+1+100) + '.254','255.255.255.0'))
+	iface_router2.bandwidth = 10000
+	link_tor.addInterface(iface_router2)
 
 
 
