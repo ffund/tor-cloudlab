@@ -76,7 +76,7 @@ for i in range(params.n_client):
 	node_client.Site('Site 1')
 	node_client.ram = 4096
 	node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
-	iface_client = node_client.addInterface('interface-client-' + str(i), pg.IPv4Address('192.168.3.' + (i+1),'255.255.255.0'))
+	iface_client = node_client.addInterface('interface-client-' + str(i), pg.IPv4Address('192.168.3.' + str(i+1),'255.255.255.0'))
 	iface_client.bandwidth = 10000
 	link_clients_router.addInterface(iface_client)
 
