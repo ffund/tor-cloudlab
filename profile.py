@@ -68,212 +68,98 @@ params = pc.bindParameters()
 request = pc.makeRequestRSpec()
 
 # set up clients!
+# link between clients and router 1
 link_clients_router = request.Link('link-clients-router')
+link_clients_router.Site('Site 1')
 for i in range(params.n_client):
 	# Node client
-	node_client = request.XenVM('client' + str(i))
+	node_client = request.XenVM('client' + str(i+1))
 	node_client.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 	node_client.Site('Site 1')
 	node_client.ram = 4096
 	node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
-	iface_client = node_client.addInterface('interface-client-' + str(i), pg.IPv4Address('192.168.3.' + str(i+1),'255.255.255.0'))
+	iface_client = node_client.addInterface('interface-client-' + str(i+1), pg.IPv4Address('192.168.3.' + str(i+1),'255.255.255.0'))
 	iface_client.bandwidth = 10000
 	link_clients_router.addInterface(iface_client)
 
 
-# Node webserver
+# Link between webserver and router 3
+link_web = request.Link('link-web')
+link_web.Site('Site 1')
+# set up webserver
 node_webserver = request.XenVM('webserver')
 node_webserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_webserver.Site('Site 1')
 node_webserver.ram = 4096
 node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"))
-iface1 = node_webserver.addInterface('interface-14', pg.IPv4Address('192.168.2.200','255.255.255.0'))
+iface_webserver = node_webserver.addInterface('interface-webserver', pg.IPv4Address('192.168.2.200','255.255.255.0'))
+iface_webserver.bandwidth = 10000
+link_web.addInterface(iface_webserver)
 
+
+link_tor = request.Link('link-tor')
+link_tor.Site('Site 1')
 # Node directoryserver
-node_directoryserver = request.XenVM('directoryserver')
-node_directoryserver.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_directoryserver.Site('Site 1')
-node_directoryserver.ram = 4096
-node_directoryserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
-iface2 = node_directoryserver.addInterface('interface-2', pg.IPv4Address('192.168.1.4','255.255.255.0'))
+for i in range(params.n_dir):
+	# set up directory servers
+	node_dir = request.XenVM('directoryserver' + str(i+1))
+	node_dir.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+	node_dir.Site('Site 1')
+	node_dir.ram = 4096
+	node_dir.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
+	iface_dir = node_dir.addInterface('interface-dir-'  + str(i+1), pg.IPv4Address('192.168.1.' + str(i+1),'255.255.255.0'))
+	iface_dir.bandwidth = 10000
+	link_tor.addInterface(iface_dir)
 
-# Node directoryserver
-node_directoryserver2 = request.XenVM('directoryserver2')
-node_directoryserver2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_directoryserver2.Site('Site 1')
-node_directoryserver2.ram = 4096
-node_directoryserver2.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
-iface2x = node_directoryserver2.addInterface('interface-2x', pg.IPv4Address('192.168.20.4','255.255.255.0'))
+# set up relay nodes
+for i in range(params.n_relay):
+	node_relay = request.XenVM('relay' + str(i+1))
+	node_relay.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+	node_relay.Site('Site 1')
+	node_relay.ram = 4096
+	node_relay.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
+	iface_relay = node_relay.addInterface('interface-relay-' + str(i+1), pg.IPv4Address('192.168.1.' + str(i+100),'255.255.255.0'))
+	iface_relay.bandwidth = 10000
+	link_tor.addInterface(iface_relay)
 
-# Node directoryserver
-node_directoryserver3 = request.XenVM('directoryserver3')
-node_directoryserver3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_directoryserver3.Site('Site 1')
-node_directoryserver3.ram = 4096
-node_directoryserver3.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
-iface2y = node_directoryserver3.addInterface('interface-2y', pg.IPv4Address('192.168.30.4','255.255.255.0'))
+# Link between routers
+link_r = request.Link('link-r')
+link_r.Site('Site 1')
 
-
-# Node relay1
-node_relay1 = request.XenVM('relay1')
-node_relay1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_relay1.Site('Site 1')
-node_relay1.ram = 4096
-node_relay1.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-iface3 = node_relay1.addInterface('interface-4', pg.IPv4Address('192.168.11.2','255.255.255.0'))
-
-# Node relay2
-node_relay2 = request.XenVM('relay2')
-node_relay2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_relay2.Site('Site 1')
-node_relay2.ram = 4096
-node_relay2.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-iface4 = node_relay2.addInterface('interface-17', pg.IPv4Address('192.168.12.2','255.255.255.0'))
-
-# Node relay3
-node_relay3 = request.XenVM('relay3')
-node_relay3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_relay3.Site('Site 1')
-node_relay3.ram = 4096
-node_relay3.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-iface5 = node_relay3.addInterface('interface-10', pg.IPv4Address('192.168.13.2','255.255.255.0'))
-
-# Node relay4
-node_relay4 = request.XenVM('relay4')
-node_relay4.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_relay4.Site('Site 1')
-node_relay4.ram = 4096
-node_relay4.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-iface6 = node_relay4.addInterface('interface-6', pg.IPv4Address('192.168.16.2','255.255.255.0'))
-
-# Node relay5
-node_relay5 = request.XenVM('relay5')
-node_relay5.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_relay5.Site('Site 1')
-node_relay5.ram = 4096
-node_relay5.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
-
-iface7 = node_relay5.addInterface('interface-8', pg.IPv4Address('192.168.15.2','255.255.255.0'))
 
 # Node router-1
 node_router_1 = request.XenVM('router-1')
 node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_1.Site('Site 1')
-iface8 = node_router_1.addInterface('interface-1', pg.IPv4Address('192.168.3.254','255.255.255.0'))
-iface9 = node_router_1.addInterface('interface-11', pg.IPv4Address('192.168.10.1','255.255.255.0'))
-
-# Node router-3
-node_router_3 = request.XenVM('router-3')
-node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_router_3.Site('Site 1')
-iface10 = node_router_3.addInterface('interface-13', pg.IPv4Address('192.168.10.3','255.255.255.0'))
-iface11 = node_router_3.addInterface('interface-15', pg.IPv4Address('192.168.2.1','255.255.255.0'))
+iface_router1 = node_router_1.addInterface('interface-1', pg.IPv4Address('192.168.3.254','255.255.255.0'))
+iface_router1.bandwidth = 10000
+link_clients_router.addInterface(iface_router1)
+iface_r1 = node_router_1.addInterface('interface-router1', pg.IPv4Address('192.168.10.1','255.255.255.0'))
+iface_r1.bandwidth = 10000
+link_r.addInterface(iface_r1)
 
 # Node router-2
 node_router_2 = request.XenVM('router-2')
 node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_2.Site('Site 1')
-iface12 = node_router_2.addInterface('interface-12', pg.IPv4Address('192.168.10.2','255.255.255.0'))
-iface13 = node_router_2.addInterface('interface-3', pg.IPv4Address('192.168.1.1','255.255.255.0'))
-iface13x = node_router_2.addInterface('interface-3x', pg.IPv4Address('192.168.20.1','255.255.255.0'))
-iface13y = node_router_2.addInterface('interface-3y', pg.IPv4Address('192.168.30.1','255.255.255.0'))
-iface14 = node_router_2.addInterface('interface-5', pg.IPv4Address('192.168.11.1','255.255.255.0'))
-iface15 = node_router_2.addInterface('interface-7', pg.IPv4Address('192.168.16.1','255.255.255.0'))
-iface16 = node_router_2.addInterface('interface-9', pg.IPv4Address('192.168.15.1','255.255.255.0'))
-iface17 = node_router_2.addInterface('interface-16', pg.IPv4Address('192.168.13.1','255.255.255.0'))
-iface18 = node_router_2.addInterface('interface-18', pg.IPv4Address('192.168.12.1','255.255.255.0'))
+iface_router2 = node_router_2.addInterface('interface-3', pg.IPv4Address('192.168.1.254','255.255.255.0'))
+iface_router2.bandwidth = 10000
+link_tor.addInterface(iface_router2)
+iface_r2 = node_router_3.addInterface('interface-router2', pg.IPv4Address('192.168.10.2','255.255.255.0'))
+iface_r2.bandwidth = 10000
+link_r.addInterface(iface_r2)
 
-# Link link-0
-link_clients_router.Site('undefined')
-iface8.bandwidth = 10000
-link_clients_router.addInterface(iface8)
+# Node router-3
+node_router_3 = request.XenVM('router-3')
+node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+node_router_3.Site('Site 1')
+iface_r3 = node_router_3.addInterface('interface-router3', pg.IPv4Address('192.168.10.3','255.255.255.0'))
+iface_r3.bandwidth = 10000
+link_r.addInterface(iface_r3)
+iface_r3_web  = node_router_3.addInterface('interface-r3-web', pg.IPv4Address('192.168.2.1','255.255.255.0'))
+iface_r3_web.bandwidth = 10000
+link_web.addInterface(iface_r3_web)
 
-# Link link-3
-link_3 = request.Link('link-3')
-link_3.Site('undefined')
-iface9.bandwidth = 10000
-iface9.bandwidth = 10000
-link_3.addInterface(iface9)
-iface12.bandwidth = 10000
-iface12.bandwidth = 10000
-link_3.addInterface(iface12)
-iface10.bandwidth = 10000
-iface10.bandwidth = 10000
-link_3.addInterface(iface10)
-
-# Link link-4
-link_4 = request.Link('link-4')
-link_4.Site('undefined')
-iface1.bandwidth = 10000
-link_4.addInterface(iface1)
-iface11.bandwidth = 10000
-link_4.addInterface(iface11)
-
-# Link link-1
-link_1 = request.Link('link-1')
-link_1.Site('undefined')
-iface2.bandwidth = 10000
-link_1.addInterface(iface2)
-iface13.bandwidth = 10000
-link_1.addInterface(iface13)
-
-# Link link-1x
-link_1x = request.Link('link-1x')
-link_1x.Site('undefined')
-iface2x.bandwidth = 10000
-link_1x.addInterface(iface2x)
-iface13x.bandwidth = 10000
-link_1x.addInterface(iface13x)
-
-
-# Link link-1y
-link_1y = request.Link('link-1y')
-link_1y.Site('undefined')
-iface2y.bandwidth = 10000
-link_1y.addInterface(iface2y)
-iface13y.bandwidth = 10000
-link_1y.addInterface(iface13y)
-
-
-# Link link-2
-link_2 = request.Link('link-2')
-link_2.Site('undefined')
-iface3.bandwidth = 10000
-link_2.addInterface(iface3)
-iface14.bandwidth = 10000
-link_2.addInterface(iface14)
-
-# Link link-5
-link_5 = request.Link('link-5')
-link_5.Site('undefined')
-iface6.bandwidth = 10000
-link_5.addInterface(iface6)
-iface15.bandwidth = 10000
-link_5.addInterface(iface15)
-
-# Link link-6
-link_6 = request.Link('link-6')
-link_6.Site('undefined')
-iface7.bandwidth = 10000
-link_6.addInterface(iface7)
-iface16.bandwidth = 10000
-link_6.addInterface(iface16)
-
-# Link link-7
-link_7 = request.Link('link-7')
-link_7.Site('undefined')
-iface5.bandwidth = 10000
-link_7.addInterface(iface5)
-iface17.bandwidth = 10000
-link_7.addInterface(iface17)
-
-# Link link-8
-link_8 = request.Link('link-8')
-link_8.Site('undefined')
-iface4.bandwidth = 10000
-link_8.addInterface(iface4)
-iface18.bandwidth = 10000
-link_8.addInterface(iface18)
 
 
 # Print the generated rspec
