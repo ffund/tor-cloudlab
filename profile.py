@@ -58,7 +58,7 @@ pc = portal.Context()
 
 # describe parameters
 pc.defineParameter("n_dir", "Number of directory servers", portal.ParameterType.INTEGER, 3)
-pc.defineParameter("n_relay", "Number of relays (that are not directory servers", portal.ParameterType.INTEGER, 5)
+pc.defineParameter("n_relay", "Number of relays (that are not directory servers)", portal.ParameterType.INTEGER, 5)
 pc.defineParameter("n_client", "Number of clients", portal.ParameterType.INTEGER, 1)
 
 # Get values specified by user during instantiation
@@ -67,13 +67,19 @@ params = pc.bindParameters()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
-# Node client
-node_client = request.XenVM('client')
-node_client.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-node_client.Site('Site 1')
-node_client.ram = 4096
-node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
-iface0 = node_client.addInterface('interface-0', pg.IPv4Address('192.168.3.100','255.255.255.0'))
+# set up clients!
+link_clients_router = request.Link('link-clients-router')
+for i in range(params.n_client):
+	# Node client
+	node_client = request.XenVM('client' + str(i))
+	node_client.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+	node_client.Site('Site 1')
+	node_client.ram = 4096
+	node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
+	iface_client = node_client.addInterface('interface-client-' + str(i), pg.IPv4Address('192.168.3.' + (i+1),'255.255.255.0'))
+	iface_client.bandwidth = 10000
+	link_clients_router.addInterface(iface_client)
+
 
 # Node webserver
 node_webserver = request.XenVM('webserver')
@@ -153,7 +159,7 @@ iface7 = node_relay5.addInterface('interface-8', pg.IPv4Address('192.168.15.2','
 node_router_1 = request.XenVM('router-1')
 node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_1.Site('Site 1')
-iface8 = node_router_1.addInterface('interface-1', pg.IPv4Address('192.168.3.1','255.255.255.0'))
+iface8 = node_router_1.addInterface('interface-1', pg.IPv4Address('192.168.3.254','255.255.255.0'))
 iface9 = node_router_1.addInterface('interface-11', pg.IPv4Address('192.168.10.1','255.255.255.0'))
 
 # Node router-3
@@ -178,12 +184,9 @@ iface17 = node_router_2.addInterface('interface-16', pg.IPv4Address('192.168.13.
 iface18 = node_router_2.addInterface('interface-18', pg.IPv4Address('192.168.12.1','255.255.255.0'))
 
 # Link link-0
-link_0 = request.Link('link-0')
-link_0.Site('undefined')
-iface0.bandwidth = 10000
-link_0.addInterface(iface0)
+link_clients_router.Site('undefined')
 iface8.bandwidth = 10000
-link_0.addInterface(iface8)
+link_clients_router.addInterface(iface8)
 
 # Link link-3
 link_3 = request.Link('link-3')
