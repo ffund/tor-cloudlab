@@ -145,7 +145,7 @@ node_router_2.Site('Site 1')
 iface_router2 = node_router_2.addInterface('interface-3', pg.IPv4Address('192.168.1.254','255.255.255.0'))
 iface_router2.bandwidth = 10000
 link_tor.addInterface(iface_router2)
-iface_r2 = node_router_3.addInterface('interface-router2', pg.IPv4Address('192.168.10.2','255.255.255.0'))
+iface_r2 = node_router_2.addInterface('interface-router2', pg.IPv4Address('192.168.10.2','255.255.255.0'))
 iface_r2.bandwidth = 10000
 link_r.addInterface(iface_r2)
 
