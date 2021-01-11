@@ -120,6 +120,7 @@ for i in range(params.n_relay):
 	node_relay.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 	iface_relay = node_relay.addInterface('interface-relay-' + str(i+1), pg.IPv4Address('192.168.1.' + str(i+100),'255.255.255.0'))
 	iface_relay.bandwidth = 10000
+	iface_relay.latency = 5
 	link_tor.addInterface(iface_relay)
 
 # Link between routers
