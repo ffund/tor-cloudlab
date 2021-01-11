@@ -102,7 +102,7 @@ link_tor.Site('Site 1')
 # Node directoryserver
 for i in range(params.n_dir):
 	# set up directory servers
-	node_dir = request.XenVM('directoryserver' + str(i+1))
+	node_dir = request.XenVM('dir' + str(i+1))
 	node_dir.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 	node_dir.Site('Site 1')
 	node_dir.ram = 4096
