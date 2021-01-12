@@ -60,6 +60,7 @@ pc = portal.Context()
 pc.defineParameter("n_dir", "Number of directory servers", portal.ParameterType.INTEGER, 3)
 pc.defineParameter("n_relay", "Number of relays (that are not directory servers)", portal.ParameterType.INTEGER, 5)
 pc.defineParameter("n_client", "Number of clients", portal.ParameterType.INTEGER, 1)
+pc.defineParameter("cap", "Capacity of each link (kbps)", portal.ParameterType.INTEGER, 10000)
 
 # Get values specified by user during instantiation
 params = pc.bindParameters()
@@ -82,7 +83,7 @@ node_router_1 = request.XenVM('router1')
 node_router_1.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_1.Site('Site 1')
 iface_r1 = node_router_1.addInterface('interface-router1', pg.IPv4Address('10.10.254.1','255.255.255.0'))
-iface_r1.bandwidth = 10000
+iface_r1.bandwidth = params.cap
 link_r.addInterface(iface_r1)
 
 # Node router2
@@ -90,7 +91,7 @@ node_router_2 = request.XenVM('router2')
 node_router_2.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_2.Site('Site 1')
 iface_r2 = node_router_2.addInterface('interface-router2', pg.IPv4Address('10.10.254.2','255.255.255.0'))
-iface_r2.bandwidth = 10000
+iface_r2.bandwidth = params.cap
 link_r.addInterface(iface_r2)
 
 # Node router3
@@ -98,10 +99,10 @@ node_router_3 = request.XenVM('router3')
 node_router_3.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 node_router_3.Site('Site 1')
 iface_r3 = node_router_3.addInterface('interface-router3', pg.IPv4Address('10.10.254.3','255.255.255.0'))
-iface_r3.bandwidth = 10000
+iface_r3.bandwidth = params.cap
 link_r.addInterface(iface_r3)
 iface_r3_web  = node_router_3.addInterface('interface-r3-web', pg.IPv4Address('10.10.253.1','255.255.255.0'))
-iface_r3_web.bandwidth = 10000
+iface_r3_web.bandwidth = params.cap
 link_web.addInterface(iface_r3_web)
 
 
@@ -112,7 +113,7 @@ node_webserver.Site('Site 1')
 node_webserver.ram = 4096
 node_webserver.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"))
 iface_webserver = node_webserver.addInterface('interface-webserver', pg.IPv4Address('10.10.253.200','255.255.255.0'))
-iface_webserver.bandwidth = 10000
+iface_webserver.bandwidth = params.cap
 link_web.addInterface(iface_webserver)
 
 # set up clients!
@@ -124,13 +125,13 @@ for i in range(params.n_client):
 	node_client.ram = 4096
 	node_client.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/client-install.sh"))
 	iface_client = node_client.addInterface('interface-client-' + str(i+1), pg.IPv4Address('10.10.' + str(200+1+i) + '.' + str(i+1),'255.255.255.0'))
-	iface_client.bandwidth = 10000
+	iface_client.bandwidth = params.cap
 	# link between client and router 1
 	link_clients_router = request.Link('link-r1-client' + str(i+1))
 	link_clients_router.Site('Site 1')
 	link_clients_router.addInterface(iface_client)
 	iface_router1 = node_router_1.addInterface('interface-r1-' + str(i+1), pg.IPv4Address('10.10.' + str(200+1+i) + '.254','255.255.255.0'))
-	iface_router1.bandwidth = 10000
+	iface_router1.bandwidth = params.cap
 	link_clients_router.addInterface(iface_router1)
 
 
@@ -146,10 +147,10 @@ for i in range(params.n_dir):
 	link_tor = request.Link('link-tor-' + str(i+1))
 	link_tor.Site('Site 1')
 	iface_dir = node_dir.addInterface('interface-dir' + str(i+1), pg.IPv4Address('10.10.' + str(i+1) + '.' + str(i+1),'255.255.255.0'))
-	iface_dir.bandwidth = 10000
+	iface_dir.bandwidth = params.cap
 	link_tor.addInterface(iface_dir)
 	iface_router2 = node_router_2.addInterface('interface-r2-dir' + str(i+1), pg.IPv4Address('10.10.' + str(i+1) + '.254','255.255.255.0'))
-	iface_router2.bandwidth = 10000
+	iface_router2.bandwidth = params.cap
 	link_tor.addInterface(iface_router2)
 
 # set up relay nodes
@@ -163,13 +164,11 @@ for i in range(params.n_relay):
 	link_tor = request.Link('link-tor-' + str(i+1+100))
 	link_tor.Site('Site 1')
 	iface_relay = node_relay.addInterface('interface-relay' + str(i+1), pg.IPv4Address('10.10.' + str(i+1+100) + '.' + str(i+1),'255.255.255.0'))
-	iface_relay.bandwidth = 10000
+	iface_relay.bandwidth = params.cap
 	link_tor.addInterface(iface_relay)
 	iface_router2 = node_router_2.addInterface('interface-r2-relay' + str(i+1), pg.IPv4Address('10.10.' + str(i+1+100) + '.254','255.255.255.0'))
-	iface_router2.bandwidth = 10000
+	iface_router2.bandwidth = params.cap
 	link_tor.addInterface(iface_router2)
-
-
 
 
 # Print the generated rspec
