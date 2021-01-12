@@ -25,7 +25,9 @@ SocksPort 0
 OrPort 5000
 ControlPort 9051
 # An exit policy that allows exiting to IPv4 LAN
+ExitPolicyRejectPrivate 0
 ExitPolicy accept 10.10.0.0/16:*
+ExitPolicy reject *:*
 EOL"
 
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
