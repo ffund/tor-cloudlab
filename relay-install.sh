@@ -2,7 +2,7 @@ sudo apt-get update
 sudo apt-get -y --force-yes install tor vim curl tor-arm
 sudo pkill -9 tor
 
-sleep 180
+sleep 240
 
 sudo -u debian-tor tor --list-fingerprint --orport 1 \
     --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" \

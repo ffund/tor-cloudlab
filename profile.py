@@ -22,14 +22,14 @@ To verify that the anonymity is working, on the client, run the
 following to see how you appear to the web server:
 
 ```
-wget -qO- http://192.168.2.200/
+wget -qO- http://10.10.253.200/
 ```
 
 Then, run the same command with Tor, and see how you appear to 
 the webserver:
 
 ```
-proxychains wget -qO- http://192.168.2.200/
+proxychains wget -qO- http://10.10.253.200/
 ```
 
 If you need to restart the Tor process on any host:

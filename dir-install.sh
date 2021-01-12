@@ -34,7 +34,6 @@ Log debug file /var/log/tor/debug.log
 ProtocolWarnings 1
 SafeLogging 0
 DisableDebuggerAttachment 0
-DirAuthority $HOSTNAME orport=5000 no-v2 hs v3ident=$finger1 $ADDRESS:7000 $finger2
 SocksPort 0
 OrPort 5000
 ControlPort 9051
@@ -56,7 +55,7 @@ DirAuthority $HOSTNAME orport=5000 no-v2 hs v3ident=$finger1 $ADDRESS:7000 $fing
 EOL"
 
 
-sleep 30
+sleep 90
 
 for i in 1 2 3 4 5 6 7 8 9 10
 do

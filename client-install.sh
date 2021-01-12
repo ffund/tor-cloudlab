@@ -7,7 +7,7 @@ sudo -u debian-tor tor --list-fingerprint --orport 1 \
     --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" \
     --datadirectory /var/lib/tor/
 
-sleep 180
+sleep 360
 
 sudo bash -c "cat >/etc/tor/torrc <<EOL
 TestingTorNetwork 1
