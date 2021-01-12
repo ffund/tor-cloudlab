@@ -40,14 +40,19 @@ ControlPort 9051
 Address $ADDRESS
 DirPort 7000
 # An exit policy that allows exiting to IPv4 LAN
+ExitPolicyRejectPrivate 0
 ExitPolicy accept 10.10.0.0/16:*
 AuthoritativeDirectory 1
 V3AuthoritativeDirectory 1
 ContactInfo auth0@test.test
 ExitPolicy reject *:*
-TestingV3AuthInitialVotingInterval 300
-TestingV3AuthInitialVoteDelay 20
-TestingV3AuthInitialDistDelay 20
+TestingV3AuthInitialVotingInterval 20
+TestingV3AuthInitialVoteDelay 4
+TestingV3AuthInitialDistDelay 4
+V3AuthVotingInterval 20
+V3AuthVoteDelay 4
+V3AuthDistDelay 4
+ExtendAllowPrivateAddresses 1
 EOL"
 
 sudo bash -c "cat >/var/www/html/fingerprint <<EOL
