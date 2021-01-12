@@ -28,14 +28,15 @@ ControlPort 9051
 ExitPolicy accept 10.10.0.0/16:*
 EOL"
 
-for i in 1 2 3 4 5 6 7 8 9 10
+DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
+for d in $DIRS
 do
-   wget -qO- http://dir"$i"/fingerprint  | sudo tee -a /etc/tor/torrc
+   wget -qO- http://"$d"/fingerprint  | sudo tee -a /etc/tor/torrc
 done
 
 HOSTNAME=$(hostname -s)
 echo "Nickname $HOSTNAME" | sudo tee -a /etc/tor/torrc
-ADDRESS=$(hostname -I | tr " " "\n" | grep "192.168")
+ADDRESS=$(hostname -I | tr " " "\n" | grep "10.10")
 echo "Address $ADDRESS" | sudo tee -a /etc/tor/torrc
 
 sudo cat /etc/tor/torrc
