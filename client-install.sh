@@ -9,11 +9,32 @@ sudo -u debian-tor tor --list-fingerprint --orport 1 \
 
 sleep 180
 
-sudo wget -O /etc/tor/torrc http://directoryserver/client.conf
+sudo bash -c "cat >/etc/tor/torrc <<EOL
+TestingTorNetwork 1
+DataDirectory /var/lib/tor
+RunAsDaemon 1
+ConnLimit 60
+ShutdownWaitLength 0
+PidFile /var/lib/tor/pid
+Log notice file /var/log/tor/notice.log
+Log info file /var/log/tor/info.log
+Log debug file /var/log/tor/debug.log
+ProtocolWarnings 1
+SafeLogging 0
+DisableDebuggerAttachment 0
+SocksPort 9050
+ControlPort 9051
+EOL"
+
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+   wget -qO- http://dir"$i"/fingerprint  | sudo tee -a /etc/tor/torrc
+done
+
 
 HOSTNAME=$(hostname -s)
 echo "Nickname $HOSTNAME" | sudo tee -a /etc/tor/torrc
-ADDRESS=$(hostname -I | tr " " "\n" | grep "192.168")
+ADDRESS=$(hostname -I | tr " " "\n" | grep "10.10")
 echo "Address $ADDRESS" | sudo tee -a /etc/tor/torrc
 
 sudo cat /etc/tor/torrc
