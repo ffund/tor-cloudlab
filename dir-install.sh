@@ -61,7 +61,8 @@ EOL"
 
 sleep 90
 
-for i in 1 2 3 4 5 6 7 8 9 10
+DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
+for d in $DIRS
 do
    wget -qO- http://dir"$i"/fingerprint  | sudo tee -a /etc/tor/torrc
 done
