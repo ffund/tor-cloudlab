@@ -8,7 +8,30 @@ sudo -u debian-tor tor --list-fingerprint --orport 1 \
     --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" \
     --datadirectory /var/lib/tor/
 
-sudo wget -O /etc/tor/torrc http://directoryserver/relay.conf
+sudo bash -c "cat >/etc/tor/torrc <<EOL
+TestingTorNetwork 1
+DataDirectory /var/lib/tor
+RunAsDaemon 1
+ConnLimit 60
+ShutdownWaitLength 0
+PidFile /var/lib/tor/pid
+Log notice file /var/log/tor/notice.log
+Log info file /var/log/tor/info.log
+Log debug file /var/log/tor/debug.log
+ProtocolWarnings 1
+SafeLogging 0
+DisableDebuggerAttachment 0
+SocksPort 0
+OrPort 5000
+ControlPort 9051
+# An exit policy that allows exiting to IPv4 LAN
+ExitPolicy accept 10.10.0.0/16:*
+EOL"
+
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+   wget -qO- http://dir"$i"/fingerprint  | sudo tee -a /etc/tor/torrc
+done
 
 HOSTNAME=$(hostname -s)
 echo "Nickname $HOSTNAME" | sudo tee -a /etc/tor/torrc
