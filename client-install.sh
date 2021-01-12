@@ -4,11 +4,14 @@ sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> 
 sudo apt-get update
 sudo apt-get -y --force-yes install tor vim curl tor-arm proxychains libvlc5 
 
+sudo service tor stop
 sudo pkill -9 tor
 
 sudo -u debian-tor tor --list-fingerprint --orport 1 \
     --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" \
     --datadirectory /var/lib/tor/
+
+sudo service tor stop
 
 sleep 360
 
@@ -44,4 +47,4 @@ echo "Address $ADDRESS" | sudo tee -a /etc/tor/torrc
 
 sudo cat /etc/tor/torrc
 
-sudo /etc/init.d/tor restart
+sudo service tor restart

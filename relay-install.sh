@@ -3,6 +3,8 @@ sudo apt-key add < A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
 sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> /etc/apt/sources.list.d/tor.list'
 sudo apt-get update
 sudo apt-get -y --force-yes install tor vim curl tor-arm
+
+sudo service tor stop
 sudo pkill -9 tor
 
 sleep 240
@@ -10,6 +12,8 @@ sleep 240
 sudo -u debian-tor tor --list-fingerprint --orport 1 \
     --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" \
     --datadirectory /var/lib/tor/
+
+sudo service tor stop
 
 sudo bash -c "cat >/etc/tor/torrc <<EOL
 TestingTorNetwork 1
@@ -45,4 +49,4 @@ echo "Address $ADDRESS" | sudo tee -a /etc/tor/torrc
 
 sudo cat /etc/tor/torrc
 
-sudo /etc/init.d/tor restart
+sudo service tor restart

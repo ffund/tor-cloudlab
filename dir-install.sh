@@ -4,7 +4,7 @@ sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> 
 sudo apt-get update 
 sudo apt-get -y --force-yes install tor vim curl tor-arm apache2 libapache2-mod-php expect
 
-sudo /etc/init.d/tor stop
+sudo service tor stop
 sudo pkill -9 tor
 
 sudo -u debian-tor mkdir /var/lib/tor/keys
@@ -16,6 +16,8 @@ sudo /usr/bin/expect /local/repository/dir.exp
 sleep 2
 
 sudo -u debian-tor tor --list-fingerprint --orport 1 --dirserver "x 127.0.0.1:1 ffffffffffffffffffffffffffffffffffffffff" --datadirectory /var/lib/tor/
+
+sudo service tor stop
 
 finger1=$(sudo cat /var/lib/tor/keys/authority_certificate  | grep fingerprint | cut -f 2 -d ' ')
 finger2=$(sudo cat /var/lib/tor/fingerprint | cut -f 2 -d ' ')
@@ -65,7 +67,7 @@ do
 done
 
 
-sudo /etc/init.d/tor start
+sudo service tor restart
 
 sleep 30
 
