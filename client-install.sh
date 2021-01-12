@@ -24,6 +24,7 @@ SafeLogging 0
 DisableDebuggerAttachment 0
 SocksPort 9050
 ControlPort 9051
+ExtendAllowPrivateAddresses 1
 EOL"
 
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)

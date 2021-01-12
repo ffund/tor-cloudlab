@@ -52,6 +52,7 @@ TestingV3AuthInitialDistDelay 4
 V3AuthVotingInterval 20
 V3AuthVoteDelay 4
 V3AuthDistDelay 4
+ExtendAllowPrivateAddresses 1
 EOL"
 
 sudo bash -c "cat >/var/www/html/fingerprint <<EOL

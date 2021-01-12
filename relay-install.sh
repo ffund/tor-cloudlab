@@ -28,6 +28,7 @@ ControlPort 9051
 ExitPolicyRejectPrivate 0
 ExitPolicy accept 10.10.0.0/16:*
 ExitPolicy reject *:*
+ExtendAllowPrivateAddresses 1
 EOL"
 
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
