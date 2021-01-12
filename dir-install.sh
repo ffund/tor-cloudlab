@@ -1,3 +1,6 @@
+wget https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
+sudo apt-key add < A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
+sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> /etc/apt/sources.list.d/tor.list'
 sudo apt-get update 
 sudo apt-get -y --force-yes install tor vim curl tor-arm apache2 libapache2-mod-php expect
 
@@ -40,19 +43,13 @@ ControlPort 9051
 Address $ADDRESS
 DirPort 7000
 # An exit policy that allows exiting to IPv4 LAN
-ExitPolicyRejectPrivate 0
 ExitPolicy accept 10.10.0.0/16:*
 AuthoritativeDirectory 1
 V3AuthoritativeDirectory 1
 ContactInfo auth0@test.test
-ExitPolicy reject *:*
-TestingV3AuthInitialVotingInterval 20
-TestingV3AuthInitialVoteDelay 4
-TestingV3AuthInitialDistDelay 4
-V3AuthVotingInterval 20
-V3AuthVoteDelay 4
-V3AuthDistDelay 4
-ExtendAllowPrivateAddresses 1
+TestingV3AuthInitialVotingInterval 300
+TestingV3AuthInitialVoteDelay 20
+TestingV3AuthInitialDistDelay 20
 EOL"
 
 sudo bash -c "cat >/var/www/html/fingerprint <<EOL

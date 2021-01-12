@@ -1,3 +1,6 @@
+wget https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
+sudo apt-key add < A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
+sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> /etc/apt/sources.list.d/tor.list'
 sudo apt-get update
 sudo apt-get -y --force-yes install tor vim curl tor-arm
 sudo pkill -9 tor
@@ -25,10 +28,8 @@ SocksPort 0
 OrPort 5000
 ControlPort 9051
 # An exit policy that allows exiting to IPv4 LAN
-ExitPolicyRejectPrivate 0
 ExitPolicy accept 10.10.0.0/16:*
-ExitPolicy reject *:*
-ExtendAllowPrivateAddresses 1
+UseEntryGuards 0
 EOL"
 
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
