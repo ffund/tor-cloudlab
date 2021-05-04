@@ -140,6 +140,13 @@ The new line that appears in the web server's access log, should *not* include a
 
 Use Ctrl+C to stop the `tcpdump` process.
 
+Transfer both packet captures to your laptop for further analysis. 
+
+In Wireshark, open the packet capture from the scenario without Tor. Right click on a packet from the TCP exchange, and choose Follow > TCP Stream. Is the HTTP request and response encrypted?
+
+In Wireshark, open the packet capture from the scenario *with* Tor. Right click on a packet from the TCP exchange, and choose Follow > TCP Stream. Is the HTTP request and response encrypted once it leaves the Tor network?
+
+
 
 ### Examine a Tor circuit
 
