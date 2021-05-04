@@ -36,6 +36,13 @@ EOL"
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
 for d in $DIRS
 do
+    nc -z "$d" 80
+	until [ "$?" == "0" ]
+	do
+		echo "Waiting for $d to come online..."
+		sleep 5
+	    nc -z "$d" 80
+   done
    wget -qO- http://"$d"/fingerprint  | sudo tee -a /etc/tor/torrc
 done
 
