@@ -1,6 +1,6 @@
 # Anonymous Routing of Network Traffic Using Tor
 
-**Note**: This experiment is a modified version of [the blog post by Takuya Fukui](https://witestlab.poly.edu/blog/anonymous-routing-of-network-traffic-using-tor/] and on [the blog post by Bintia Keita](https://witestlab.poly.edu/blog/latency-tor/).
+**Note**: This experiment is a modified version of [the blog post by Takuya Fukui](https://witestlab.poly.edu/blog/anonymous-routing-of-network-traffic-using-tor/) and on [the blog post by Bintia Keita](https://witestlab.poly.edu/blog/latency-tor/).
 
 In this experiment, we will set up a private Tor network on GENI, and we'll see how Tor supports anonymous web browsing. This experiment will take approximately 60-90 minutes.
 
