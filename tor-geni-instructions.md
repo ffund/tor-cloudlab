@@ -100,7 +100,16 @@ _curses.error: curses function returned NULL
 
 ### Verify client anonymity
 
-Next, we'll verify that the client is anonymous to the server when using Tor. On the web server node, run
+Next, we'll verify that the client is anonymous to the server when using Tor. 
+
+We will use `tcpdump` to view network traffic while also saving packets to a file. On the webserver, run
+
+
+```
+sudo tcpdump -i eth1 'port 80' -U -w - | tee $(hostname -s)-http-no-tor.pcap | tcpdump -nnxxXSs 1514 -r - 
+```
+
+Then, in a second terminal on the web server node, run
 
 ```
 sudo tail -f /var/log/apache2/access.log  
@@ -114,6 +123,12 @@ curl http://10.10.253.200/
 
 Note the line that appears in the web server's access log, which includes the IP address from which this access appears. It should show the client's IP address. Run `ifconfig` on the client to verify that this address belongs to the client.
 
+Use Ctrl+C to stop the `tcpdump` process, and then start a new one for the scenario with Tor:
+
+```
+sudo tcpdump -i eth1 'port 80' -U -w - | tee $(hostname -s)-http-with-tor.pcap | tcpdump -nnxxXSs 1514 -r - 
+```
+
 Then, access the webserver again from the client, but through the Tor network, and see how the client appears to 
 the webserver this time:
 
@@ -122,6 +137,8 @@ curl --socks5-hostname 127.0.0.1:9050 http://10.10.253.200/
 ```
 
 The new line that appears in the web server's access log, should *not* include any address that belongs to the client. Run `ifconfig` on each of the relay and directory authority nodes to identify the Tor node that this address belongs to.
+
+Use Ctrl+C to stop the `tcpdump` process.
 
 
 ### Identify the entry guard
