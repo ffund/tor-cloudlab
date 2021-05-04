@@ -317,8 +317,8 @@ you'll get the name of your hidden service. This name is a 16-character hash der
 * When a client wants to connect to the hidden service, it gets the hidden service descriptor from the Tor network, and learns the service's introduction points and public key.
 * The client selects a Tor node to act as a rendezvous point, builds a circuit to the rendezvous point, and sends it a one-time secret.
 * The client creates an Introduce message, which includes the address of the rendezvous point and the one-time secret. The client encrypts this message with the hidden service's public key, builds a Tor circuit to one of the introduction points, and sends the encrypted message to the introduction point over the Tor circuit, with instructions for it to be forwarded to the hidden service.
-* The hidden service receives the encrypted Introduce message over the circuit that it had previously established with the introduction point. It decrypts the message and learns the one-time secret and the addres of the rendezvous point. 
-* The hidden service creates a Rendezvous message containing the one-time secret. It builds a circuit to thethe rendezvous point and sends the message over this circuit.
+* The hidden service receives the encrypted Introduce message over the circuit that it had previously established with the introduction point. It decrypts the message and learns the one-time secret and the address of the rendezvous point. 
+* The hidden service creates a Rendezvous message containing the one-time secret. It builds a circuit to the rendezvous point and sends the message over this circuit.
 * Now that both the client and the hidden service have connected to the rendezvous point (via separate circuits), they can to send traffic back and forth via the rendezvous point and their respective circuits to it.
 
 
