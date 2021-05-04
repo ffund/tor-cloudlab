@@ -46,6 +46,7 @@ do
     sleep 5
     nc -z "$d" 80
   done
+  sleep 5
   wget -qO- http://"$d"/fingerprint  | sudo tee -a /etc/tor/torrc
 done
 
