@@ -141,7 +141,7 @@ The new line that appears in the web server's access log, should *not* include a
 Use Ctrl+C to stop the `tcpdump` process.
 
 
-### Identify the entry guard
+### Examine a Tor circuit
 
 In the previous section, you identified the exit guard - the Tor relay at which traffic leaves the Tor network en route to its final destination. Between the client and the exit guard, this traffic traverses multiple hops, in order to preserve the client's anonymity.
 
