@@ -257,7 +257,7 @@ On the webserver node, run
 
 ```
 cd /local/repository
-sudo bash client-install.sh
+sudo bash client-fast-install.sh
 ```
 
 to install Tor. Also install carml:
