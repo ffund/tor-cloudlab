@@ -1,0 +1,226 @@
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/request.xsd" type="request">
+  <node client_id="router1" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+    </sliver_type>
+    <interface client_id="router1:interface-router1">
+      <ip address="10.10.254.1" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <interface client_id="router1:interface-r1-1">
+      <ip address="10.10.201.254" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    
+    <services xmlns="http://www.geni.net/resources/rspec/3"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="router2" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+    </sliver_type>
+    <interface client_id="router2:interface-router2">
+      <ip address="10.10.254.2" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <interface client_id="router2:interface-r2-dir1">
+      <ip address="10.10.1.254" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <services xmlns="http://www.geni.net/resources/rspec/3"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="router3" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+    </sliver_type>
+    <interface client_id="router3:interface-router3">
+      <ip address="10.10.254.3" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <interface client_id="router3:interface-r3-web">
+      <ip address="10.10.253.1" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <services xmlns="http://www.geni.net/resources/rspec/3"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="webserver" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <interface client_id="webserver:interface-webserver">
+      <ip address="10.10.253.200" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/webserver-install.sh"/>
+    </services>
+    
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="client1" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <interface client_id="client1:interface-client-1">
+      <ip address="10.10.201.1" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/client-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="dir1" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <interface client_id="dir1:interface-dir1">
+      <ip address="10.10.1.1" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/dir-install.sh"/>
+    </services>
+    
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+  </node>
+  <node client_id="dir2" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/dir-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <interface xmlns="http://www.geni.net/resources/rspec/3" client_id="dir2:interface-dir2">
+      <ip xmlns="http://www.geni.net/resources/rspec/3" address="10.10.1.2" type="ipv4" netmask="255.255.255.0"/>
+    </interface>
+  </node>
+  <node client_id="dir3" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/dir-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <interface xmlns="http://www.geni.net/resources/rspec/3" client_id="dir3:interface-dir3">
+      <ip xmlns="http://www.geni.net/resources/rspec/3" address="10.10.1.3" type="ipv4" netmask="255.255.255.0"/>
+    </interface>
+  </node>
+  <node client_id="relay1" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/relay-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <interface xmlns="http://www.geni.net/resources/rspec/3" client_id="relay1:interface-relay1">
+      <ip xmlns="http://www.geni.net/resources/rspec/3" address="10.10.1.11" type="ipv4" netmask="255.255.255.0"/>
+    </interface>
+  </node>
+  <node client_id="relay2" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/relay-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <interface xmlns="http://www.geni.net/resources/rspec/3" client_id="relay2:interface-relay2">
+      <ip xmlns="http://www.geni.net/resources/rspec/3" address="10.10.1.12" type="ipv4" netmask="255.255.255.0"/>
+    </interface>
+  </node>
+  <node client_id="relay3" exclusive="false">
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <emulab:xen ram="4096"/>
+    </sliver_type>
+    <services>
+      <execute shell="sh" command="/usr/bin/sudo /usr/bin/git clone https://github.com/ffund/tor-cloudlab.git /local/repository; /usr/bin/sudo /bin/bash /local/repository/relay-install.sh"/>
+    </services>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <interface xmlns="http://www.geni.net/resources/rspec/3" client_id="relay3:interface-relay3">
+      <ip xmlns="http://www.geni.net/resources/rspec/3" address="10.10.1.13" type="ipv4" netmask="255.255.255.0"/>
+    </interface>
+  </node>
+  <link client_id="link-r">
+    <interface_ref client_id="router1:interface-router1"/>
+    <interface_ref client_id="router2:interface-router2"/>
+    <interface_ref client_id="router3:interface-router3"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router2:interface-router2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router3:interface-router3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router1:interface-router1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router3:interface-router3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router1:interface-router1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router2:interface-router2" capacity="10000"/>
+  </link>
+  <link client_id="link-web">
+    <interface_ref client_id="router3:interface-r3-web"/>
+    <interface_ref client_id="webserver:interface-webserver"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-r3-web" dest_id="webserver:interface-webserver" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="webserver:interface-webserver" dest_id="router3:interface-r3-web" capacity="10000"/>
+  </link>
+  <link client_id="link-r1-client1">
+    <interface_ref client_id="client1:interface-client-1"/>
+    <interface_ref client_id="router1:interface-r1-1"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="client1:interface-client-1" dest_id="router1:interface-r1-1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-r1-1" dest_id="client1:interface-client-1" capacity="10000"/>
+  </link>
+  <link client_id="link-tor-1">
+    <interface_ref client_id="dir1:interface-dir1"/>
+    <interface_ref client_id="router2:interface-r2-dir1"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
+    <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="dir2:interface-dir2"/>
+    <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="dir3:interface-dir3"/>
+    <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay1:interface-relay1"/>
+    <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay2:interface-relay2"/>
+    <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay3:interface-relay3"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay3:interface-relay3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir1:interface-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="router2:interface-r2-dir1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir2:interface-dir2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir3:interface-dir3" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay1:interface-relay1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay2:interface-relay2" capacity="10000"/>
+  </link>
+</rspec>
