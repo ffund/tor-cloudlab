@@ -64,8 +64,17 @@ sleep 90
 DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
 for d in $DIRS
 do
-   wget -qO- http://"$d"/fingerprint  | sudo tee -a /etc/tor/torrc
+  nc -z "$d" 80
+  until [ "$?" == "0" ]
+  do
+    echo "Waiting for $d to come online..."
+    sleep 5
+    nc -z "$d" 80
+  done
+  sleep 5
+  wget -qO- http://"$d"/fingerprint  | sudo tee -a /etc/tor/torrc
 done
+
 
 
 sudo service tor restart
