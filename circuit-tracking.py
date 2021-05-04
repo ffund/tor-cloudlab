@@ -1,3 +1,6 @@
+# From the STEM examples page
+# https://stem.torproject.org/tutorials/examples/exit_used.html
+
 import functools
 
 from stem import StreamStatus
