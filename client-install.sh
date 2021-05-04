@@ -55,4 +55,17 @@ echo "Address $ADDRESS" | sudo tee -a /etc/tor/torrc
 
 sudo cat /etc/tor/torrc
 
+DIRS=$(cat /etc/hosts | grep dir | cut -d ' ' -f 3)
+for d in $DIRS
+do
+  nc -z "$d" 5000
+  until [ "$?" == "0" ]
+  do
+    echo "Waiting for $d to come online..."
+    sleep 5
+    nc -z "$d" 5000
+  done
+done
+
+
 sudo service tor restart
