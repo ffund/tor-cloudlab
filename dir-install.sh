@@ -52,6 +52,7 @@ ContactInfo auth0@test.test
 TestingV3AuthInitialVotingInterval 300
 TestingV3AuthInitialVoteDelay 20
 TestingV3AuthInitialDistDelay 20
+AutomapHostsOnResolve 1
 EOL"
 
 sudo bash -c "cat >/var/www/html/fingerprint <<EOL
