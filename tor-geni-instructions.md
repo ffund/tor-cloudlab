@@ -153,7 +153,7 @@ sudo apt -y install iperf3
 ```
 
 
-We are going to use the *carml* Python module to monitor Tor circuits. On the client node and the webserver node, run
+We are going to use the *carml* Python module to monitor Tor circuits. On the client node, run
 
 ```
 sudo apt -y install python3-pip python3-humanize python3-click python-txtorcon
@@ -260,7 +260,14 @@ cd /local/repository
 sudo bash client-install.sh
 ```
 
-to install Tor.
+to install Tor. Also install carml:
+
+
+```
+sudo apt -y install python3-pip python3-humanize python3-click python-txtorcon
+sudo -H -u debian-tor python3 -m pip install carml
+```
+
 
 Then, run
 
