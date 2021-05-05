@@ -304,7 +304,13 @@ Use Ctrl+O to save the file (and Enter to confirm the filename) and then Ctrl+X 
 sudo service tor restart
 ```
 
-Now, if you run
+If you run the carml monitor again on the webserver, you'll see some circuits that are not `GENERAL` purpose circuits, like the ones we saw before - these new circuits are `HS_SERVICE_HSDIR` and `HS_SERVICE_INTRO` circuits. We'll explain these in more detail shortly.
+
+```
+sudo -H -u debian-tor python3 -m carml monitor --once"
+```
+
+Also, if you run
 
 ```
 sudo -u debian-tor cat /var/lib/tor/hidden_service/http/hostname
@@ -338,7 +344,7 @@ On the webserver node, you will notice some circuits for purposes other than `GE
 While the carml monitor is running on both the client and the webserver, on the client node, run
 
 ```
-curl --socks5-hostname 127.0.0.1:9050 vfembklbr2dcm6ijofveng3iurpuzrguwhhhkqmgrvwjzmy7ji756zid.onion/file.txt
+curl --socks5-hostname 127.0.0.1:9050 vfembklbr2dcm6ijofveng3iurpuzrguwhhhkqmgrvwjzmy7ji756zid.onion
 ```
 
 (substituting the name of *your own* hidden service, which you found earlier, in place of the last argument.)
