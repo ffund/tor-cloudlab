@@ -307,7 +307,7 @@ sudo service tor restart
 If you run the carml monitor again on the webserver, you'll see some circuits that are not `GENERAL` purpose circuits, like the ones we saw before - these new circuits are `HS_SERVICE_HSDIR` and `HS_SERVICE_INTRO` circuits. We'll explain these in more detail shortly.
 
 ```
-sudo -H -u debian-tor python3 -m carml monitor --once"
+sudo -H -u debian-tor python3 -m carml monitor --once
 ```
 
 Also, if you run
