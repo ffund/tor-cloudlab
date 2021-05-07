@@ -150,26 +150,26 @@
     <interface_ref client_id="router2:interface-router2"/>
     <interface_ref client_id="router3:interface-router3"/>
     <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router2:interface-router2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router3:interface-router3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router1:interface-router1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router3:interface-router3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router1:interface-router1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router2:interface-router2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router2:interface-router2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-router1" dest_id="router3:interface-router3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router1:interface-router1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-router2" dest_id="router3:interface-router3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router1:interface-router1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-router3" dest_id="router2:interface-router2" capacity="5000"/>
   </link>
   <link client_id="link-web">
     <interface_ref client_id="router3:interface-r3-web"/>
     <interface_ref client_id="webserver:interface-webserver"/>
     <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-r3-web" dest_id="webserver:interface-webserver" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="webserver:interface-webserver" dest_id="router3:interface-r3-web" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router3:interface-r3-web" dest_id="webserver:interface-webserver" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="webserver:interface-webserver" dest_id="router3:interface-r3-web" capacity="5000"/>
   </link>
   <link client_id="link-r1-client1">
     <interface_ref client_id="client1:interface-client-1"/>
     <interface_ref client_id="router1:interface-r1-1"/>
     <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="undefined"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="client1:interface-client-1" dest_id="router1:interface-r1-1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-r1-1" dest_id="client1:interface-client-1" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="client1:interface-client-1" dest_id="router1:interface-r1-1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router1:interface-r1-1" dest_id="client1:interface-client-1" capacity="5000"/>
   </link>
   <link client_id="link-tor-1">
     <interface_ref client_id="dir1:interface-dir1"/>
@@ -180,47 +180,47 @@
     <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay1:interface-relay1"/>
     <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay2:interface-relay2"/>
     <interface_ref xmlns="http://www.geni.net/resources/rspec/3" client_id="relay3:interface-relay3"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay2:interface-relay2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay2:interface-relay2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay2:interface-relay2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay2:interface-relay2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay2:interface-relay2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay3:interface-relay3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir1:interface-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="router2:interface-r2-dir1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir2:interface-dir2" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir3:interface-dir3" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay1:interface-relay1" capacity="10000"/>
-    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay2:interface-relay2" capacity="10000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay2:interface-relay2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir1:interface-dir1" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay2:interface-relay2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="router2:interface-r2-dir1" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay2:interface-relay2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir2:interface-dir2" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay2:interface-relay2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="dir3:interface-dir3" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay2:interface-relay2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay1:interface-relay1" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay2:interface-relay2" dest_id="relay3:interface-relay3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir1:interface-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="router2:interface-r2-dir1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir2:interface-dir2" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="dir3:interface-dir3" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay1:interface-relay1" capacity="5000"/>
+    <property xmlns="http://www.geni.net/resources/rspec/3" source_id="relay3:interface-relay3" dest_id="relay2:interface-relay2" capacity="5000"/>
   </link>
 </rspec>
