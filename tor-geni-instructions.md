@@ -2,7 +2,7 @@
 
 **Note**: This experiment is a modified version of [the blog post by Takuya Fukui](https://witestlab.poly.edu/blog/anonymous-routing-of-network-traffic-using-tor/) and on [the blog post by Bintia Keita](https://witestlab.poly.edu/blog/latency-tor/).
 
-In this experiment, we will set up a private Tor network on GENI, and we'll see how Tor supports anonymous web browsing. This experiment will take approximately 60-90 minutes.
+In this experiment, we will set up a private Tor network on GENI, and we'll see how Tor supports anonymous web browsing *and* anonymous web services. This experiment will take approximately 60-90 minutes.
 
 To reproduce this experiment on GENI, you will need an account on the [GENI Portal](http://groups.geni.net/geni/wiki/SignMeUp), and you will need to have [joined a project](http://groups.geni.net/geni/wiki/JoinAProject). You should have already [uploaded your SSH keys to the portal and know how to log in to a node with those keys](http://groups.geni.net/geni/wiki/HowTo/LoginToNodes). If you're not sure if you have those skills, you may want to try [Lab Zero](http://tinyurl.com/geni-labzero) first.
 
