@@ -111,7 +111,6 @@ for i in range(params.n_client):
 	iface_client.bandwidth = params.cap
 	# link between client and router 1
 	link_clients_router = request.Link('link-r1-client' + str(i+1))
-	link_clients_router.Site('Site 1')
 	link_clients_router.addInterface(iface_client)
 	iface_router1 = node_router_1.addInterface('interface-r1-' + str(i+1), pg.IPv4Address('10.10.' + str(200+1+i) + '.254','255.255.255.0'))
 	iface_router1.bandwidth = params.cap
@@ -128,7 +127,6 @@ for i in range(params.n_dir):
 	node_dir.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/dir-install.sh"))
 	# Link for tor network
 	link_tor = request.Link('link-tor-' + str(i+1))
-	link_tor.Site('Site 1')
 	iface_dir = node_dir.addInterface('interface-dir' + str(i+1), pg.IPv4Address('10.10.' + str(i+1) + '.' + str(i+1),'255.255.255.0'))
 	iface_dir.bandwidth = params.cap
 	link_tor.addInterface(iface_dir)
@@ -141,7 +139,6 @@ for i in range(params.n_dir):
 for i in range(params.n_relay):
 	node_relay = request.XenVM('relay' + str(i+1))
 	node_relay.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-	node_relay.Site('Site 1')
 	node_relay.ram = 4096
 	node_relay.addService(pg.Execute(shell="sh", command="/usr/bin/sudo /bin/bash /local/repository/relay-install.sh"))
 	# Link for tor network
