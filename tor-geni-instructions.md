@@ -163,14 +163,17 @@ sudo apt -y install iperf3
 We are going to use the *carml* Python module to monitor Tor circuits. On the client node, run
 
 ```
-sudo apt -y install python3-pip python3-humanize python3-click python-txtorcon
-sudo -H -u debian-tor python3 -m pip install carml
+sudo apt -y install python3-dev python3-venv libffi-dev build-essential
+sudo rm -rf /opt/carml
+sudo python3 -m venv /opt/carml
+sudo /opt/carml/bin/pip install carml==21.1.0
+sudo /opt/carml/bin/pip install setuptools==68.2.2
 ```
 
 Then, on the client node, run
 
 ```
-sudo -H -u debian-tor python3 -m carml monitor
+sudo -u debian-tor /opt/carml/bin/python -m carml monitor
 ```
 
 and leave it running. When you first run the carml monitor, it will show you a list of circuits (paths through the Tor network) and a numeric ID associated with each one:
@@ -271,8 +274,11 @@ to install Tor. Also install carml:
 
 
 ```
-sudo apt -y install python3-pip python3-humanize python3-click python-txtorcon
-sudo -H -u debian-tor python3 -m pip install carml
+sudo apt -y install python3-dev python3-venv libffi-dev build-essential
+sudo rm -rf /opt/carml
+sudo python3 -m venv /opt/carml
+sudo /opt/carml/bin/pip install carml==21.1.0
+sudo /opt/carml/bin/pip install setuptools==68.2.2
 ```
 
 
@@ -307,7 +313,7 @@ sudo service tor restart
 If you run the carml monitor again on the webserver, you'll see some circuits that are not `GENERAL` purpose circuits, like the ones we saw before - these new circuits are `HS_SERVICE_HSDIR` and `HS_SERVICE_INTRO` circuits. We'll explain these in more detail shortly.
 
 ```
-sudo -H -u debian-tor python3 -m carml monitor --once
+sudo -u debian-tor /opt/carml/bin/python -m carml monitor --once
 ```
 
 Also, if you run
@@ -333,7 +339,7 @@ Try this now - on both the client node and the webserver node, run
 
 
 ```
-sudo -H -u debian-tor python3 -m carml monitor
+sudo -u debian-tor /opt/carml/bin/python -m carml monitor
 ```
 
 to monitor circuits. 
@@ -356,5 +362,5 @@ It will build a `HS_CLIENT_REND` circuit to a rendezvous point. Then, it will us
 **Note**: If there are too many `HS_SERVICE_HSDIR` circuits on the server to easily find the others, you can exclude these from the output. To see a list of circuits excluding the `HS_SERVICE_HSDIR` circuits, use
 
 ```
-sudo -H -u debian-tor python3 -m carml monitor --once | grep -v "HS_SERVICE_HSDIR"
+sudo -u debian-tor /opt/carml/bin/python -m carml monitor --once | grep -v "HS_SERVICE_HSDIR"
 ```
