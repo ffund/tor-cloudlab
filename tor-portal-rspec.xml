@@ -134,7 +134,7 @@
   </node>
   <node client_id="relay3" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <services>
