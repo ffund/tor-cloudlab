@@ -1,7 +1,7 @@
 <rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/request.xsd" type="request">
   <node client_id="router1" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
     </sliver_type>
     <interface client_id="router1:interface-router1">
       <ip address="10.10.254.1" netmask="255.255.255.0" type="ipv4"/>
@@ -15,7 +15,7 @@
   </node>
   <node client_id="router2" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
     </sliver_type>
     <interface client_id="router2:interface-router2">
       <ip address="10.10.254.2" netmask="255.255.255.0" type="ipv4"/>
@@ -28,7 +28,7 @@
   </node>
   <node client_id="router3" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
     </sliver_type>
     <interface client_id="router3:interface-router3">
       <ip address="10.10.254.3" netmask="255.255.255.0" type="ipv4"/>
@@ -41,7 +41,7 @@
   </node>
   <node client_id="webserver" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <interface client_id="webserver:interface-webserver">
@@ -55,7 +55,7 @@
   </node>
   <node client_id="client1" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <interface client_id="client1:interface-client-1">
@@ -68,7 +68,7 @@
   </node>
   <node client_id="dir1" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <interface client_id="dir1:interface-dir1">
@@ -82,7 +82,7 @@
   </node>
   <node client_id="dir2" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <services>
@@ -95,7 +95,7 @@
   </node>
   <node client_id="dir3" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <services>
@@ -108,7 +108,7 @@
   </node>
   <node client_id="relay1" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <services>
@@ -121,7 +121,7 @@
   </node>
   <node client_id="relay2" exclusive="false">
     <sliver_type name="emulab-xen">
-      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"/>
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU24-64-STD"/>
       <emulab:xen ram="4096"/>
     </sliver_type>
     <services>

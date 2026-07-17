@@ -1,8 +1,5 @@
-wget https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
-sudo apt-key add < A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
-sudo sh -c 'echo "deb http://deb.torproject.org/torproject.org/ bionic main" >> /etc/apt/sources.list.d/tor.list'
 sudo apt-get update
-sudo apt-get -y --force-yes install tor vim curl tor-arm proxychains libvlc5 
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install tor nyx vim curl proxychains4 netcat-openbsd
 
 sudo service tor stop
 sudo pkill -9 tor
